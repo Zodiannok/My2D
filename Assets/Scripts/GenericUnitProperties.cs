@@ -61,11 +61,24 @@ public class GenericUnitProperties : MonoBehaviour
 		}
 
 		// If the player should jump...
-		if (jump && m_Grounded)
+		if (jump)
 		{
-			m_Grounded = false;
-			// Add a vertical force to the player.
-			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+			bool canJump = false;
+			if (m_Grounded)
+			{
+				m_Grounded = false;
+				canJump = true;
+			}
+			else if (m_AerialJumpRemaining > 0)
+			{
+				--m_AerialJumpRemaining;
+				canJump = true;
+			}
+			if (canJump)
+			{
+				// Add a vertical force to the player.
+				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+			}
 		}
 	}
 
