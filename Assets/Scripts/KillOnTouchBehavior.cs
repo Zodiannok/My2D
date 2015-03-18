@@ -18,7 +18,7 @@ public class KillOnTouchBehavior : MonoBehaviour {
 	// Kills the unit that collides with me
 	void OnTriggerEnter2D(Collider2D collider) {
 		GameObject unit = collider.gameObject;
-		if ((m_KillTargetTypes.value & unit.layer) != 0)
+		if ((m_KillTargetTypes.value & (1 << unit.layer)) != 0)
 		{
 			unit.SetActive(false);
 		}
