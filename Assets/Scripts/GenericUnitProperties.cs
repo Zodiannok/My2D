@@ -14,17 +14,24 @@ public class GenericUnitProperties : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private bool m_Grounded = false;
 	private int m_AerialJumpRemaining = 0;
+	private Animator m_Anim;            // Reference to the player's animator component. Can be null.
 
 	// Use this for initialization
 	void Start ()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+		m_Anim = GetComponent<Animator>();
 		m_AerialJumpRemaining = m_AerialJumpCount;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+		if (m_Anim)
+		{
+			m_Anim.SetBool("IsAerial", !m_Grounded);
+			m_Anim.SetFloat("XAbsVelocity", System.Math.Abs(m_Rigidbody2D.velocity.x));
+		}
 	}
 
 	// Check if the unit is grounded in fixed update.
